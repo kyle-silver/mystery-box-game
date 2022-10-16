@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Puzzle, randomPuzzle } from "./Puzzle";
-import { Sidebar } from "./Sidebar";
+import { LoadingSidebar, Sidebar } from "./Sidebar";
 import { EmptyWordGuessArea, Entry, WordGuessArea } from "./WordGuessArea";
 import "./App.css";
 
@@ -26,7 +26,12 @@ function App() {
       </div>
     );
   }
-  return <EmptyWordGuessArea />;
+  return (
+    <div className="container">
+      <LoadingSidebar />
+      <EmptyWordGuessArea />
+    </div>
+  );
 }
 
 export default App;

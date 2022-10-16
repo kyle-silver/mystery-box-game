@@ -49,5 +49,5 @@ export function WordGuessArea(props: WordGuessProps) {
 }
 
 export function EmptyWordGuessArea() {
-  return <div>Retrieving data...</div>;
+  return <div></div>;
 }
