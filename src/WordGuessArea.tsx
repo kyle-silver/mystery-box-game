@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { Keyboard } from "./Keyboard";
 import { Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
 
@@ -19,19 +20,6 @@ function acceptable(guess: string, puzzle: Puzzle, entries: Entry[]): boolean {
   return puzzle.isSolution(guess) && !entries.map((entry) => entry.word).includes(guess);
 }
 
-function isValidInput(value: string): boolean {
-  // if the input field is empty, accept it
-  if (value.length === 0) {
-    return true;
-  }
-  // each letter can only be used once
-  const last = value[value.length - 1];
-  if (value.substring(0, value.length - 1).includes(last)) {
-    return false;
-  }
-  return value.search("^[a-z]{0,8}$") >= 0;
-}
-
 export interface WordGuessProps {
   puzzle: Puzzle;
   entries: Entry[];
@@ -40,7 +28,6 @@ export interface WordGuessProps {
 
 export function WordGuessArea(props: WordGuessProps) {
   const { puzzle, entries, setEntries: onEntryChange } = props;
-  const [input, setInput] = useState("");
   const listItems = entries.map(WordListEntry);
   const userInput = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -52,28 +39,11 @@ export function WordGuessArea(props: WordGuessProps) {
   return (
     <div className="word-guess-area">
       <ul>{listItems}</ul>
-      <input
-        type="text"
-        value={input}
-        style={{
-          width: `${input.length}ch`,
-        }}
-        ref={userInput}
-        onInput={(e) => {
-          const value = e.currentTarget.value.toLowerCase();
-          if (isValidInput(value)) {
-            setInput(value);
-          }
-        }}
-        onKeyDown={(e) => {
-          if (e.key !== "Enter" || input.length < 4) {
-            return;
-          }
+      <Keyboard
+        onSubmit={(input) => {
           onEntryChange([...entries, { word: input, accepted: acceptable(input, puzzle, entries) }]);
-          setInput("");
         }}
       />
-      <span className="blink">_</span>
     </div>
   );
 }

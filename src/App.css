@@ -13,7 +13,7 @@ input:focus {
 /** Swear on my life I'm only using this for a blinking cursor in a mock terminal */
 blink,
 .blink {
-  animation: blink 2.5s step-end infinite;
+  animation: blink 1.5s step-end infinite;
 }
 
 @keyframes blink {

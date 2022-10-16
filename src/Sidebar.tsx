@@ -15,7 +15,7 @@ export function Sidebar(props: SidebarProps): JSX.Element {
     <div className="sidebar">
       <p className="puzzle-input">{puzzle.input.toUpperCase()}</p>
       <p className="counter">[{accepted}/8]</p>
-      <button onClick={() => setPuzzle(null)}>new game</button>
+      <button onClick={() => setPuzzle(null)}>new</button>
     </div>
   );
 }

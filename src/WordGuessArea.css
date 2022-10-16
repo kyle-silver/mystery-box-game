@@ -12,10 +12,6 @@
   color: var(--black);
 }
 
-.word-guess-area input {
-  color: var(--black);
-}
-
 .word-guess-area .accepted {
   color: var(--green);
 }
@@ -27,4 +23,5 @@
 .word-guess-area ul {
   list-style-type: none;
   padding-left: 0;
+  margin-bottom: 0;
 }
