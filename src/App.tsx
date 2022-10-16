@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { Puzzle, randomPuzzle } from "./Puzzle";
-import { EmptyWordGuessArea, WordGuessArea } from "./WordGuessArea";
+import { Sidebar } from "./Sidebar";
+import { EmptyWordGuessArea, Entry, WordGuessArea } from "./WordGuessArea";
+import "./App.css";
 
 function App() {
-  // const puzzle = new Puzzle("acpruwxy", ["awry", "carp", "crux", "pray", "racy", "warp", "wary", "waxy", "wrap", "xray"]);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
+  const [entries, setEntries] = useState<Entry[]>([]);
   useEffect(() => {
     async function retrieve() {
       const retrieved = await randomPuzzle();
+      setEntries([]);
       setPuzzle(retrieved);
     }
     if (puzzle === null) {
@@ -16,7 +19,12 @@ function App() {
   });
 
   if (puzzle) {
-    return <WordGuessArea puzzle={puzzle} />;
+    return (
+      <div className="container">
+        <Sidebar puzzle={puzzle} setPuzzle={setPuzzle} entries={entries} />
+        <WordGuessArea puzzle={puzzle} entries={entries} setEntries={setEntries} />
+      </div>
+    );
   }
   return <EmptyWordGuessArea />;
 }

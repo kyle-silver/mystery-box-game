@@ -1,0 +1,30 @@
+/* Style page content */
+.word-guess-area {
+  margin-top: 1em;
+  margin-left: max(9ch, 33%); /* Same as the width of the sidebar */
+  padding-left: 10px;
+  color: var(--gray);
+  font-weight: 700;
+}
+
+.word-guess-area p {
+  margin: auto;
+  color: var(--black);
+}
+
+.word-guess-area input {
+  color: var(--black);
+}
+
+.word-guess-area .accepted {
+  color: var(--green);
+}
+
+.word-guess-area .rejected {
+  color: var(--gray);
+}
+
+.word-guess-area ul {
+  list-style-type: none;
+  padding-left: 0;
+}

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Puzzle } from "./Puzzle";
+import "./WordGuessArea.css";
 
-interface Entry {
+export interface Entry {
   word: string;
   accepted: boolean;
 }
@@ -33,22 +34,31 @@ function isValidInput(value: string): boolean {
 
 export interface WordGuessProps {
   puzzle: Puzzle;
+  entries: Entry[];
+  setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
 }
 
 export function WordGuessArea(props: WordGuessProps) {
-  const [entries, setEntries] = useState<Entry[]>([]);
+  const { puzzle, entries, setEntries: onEntryChange } = props;
   const [input, setInput] = useState("");
   const listItems = entries.map(WordListEntry);
-  const puzzle = props.puzzle;
-  const accepted = entries.filter((entry) => entry.accepted).length;
+  const userInput = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (userInput.current) {
+      console.log("focusing...");
+      userInput.current.focus();
+    }
+  }, []);
   return (
-    <div>
-      <p>
-        The word to guess is {puzzle.input} [{accepted} / 8]
-      </p>
+    <div className="word-guess-area">
+      <ul>{listItems}</ul>
       <input
         type="text"
         value={input}
+        style={{
+          width: `${input.length}ch`,
+        }}
+        ref={userInput}
         onInput={(e) => {
           const value = e.currentTarget.value.toLowerCase();
           if (isValidInput(value)) {
@@ -59,11 +69,11 @@ export function WordGuessArea(props: WordGuessProps) {
           if (e.key !== "Enter" || input.length < 4) {
             return;
           }
-          setEntries([...entries, { word: input, accepted: acceptable(input, puzzle, entries) }]);
+          onEntryChange([...entries, { word: input, accepted: acceptable(input, puzzle, entries) }]);
           setInput("");
         }}
       />
-      <ul>{listItems}</ul>
+      <span className="blink">_</span>
     </div>
   );
 }
