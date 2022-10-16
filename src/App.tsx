@@ -16,7 +16,7 @@ function App() {
     if (puzzle === null) {
       retrieve();
     }
-  });
+  }, [puzzle]);
 
   if (puzzle) {
     return (

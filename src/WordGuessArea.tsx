@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Keyboard } from "./Keyboard";
 import { Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
@@ -29,13 +29,6 @@ export interface WordGuessProps {
 export function WordGuessArea(props: WordGuessProps) {
   const { puzzle, entries, setEntries: onEntryChange } = props;
   const listItems = entries.map(WordListEntry);
-  const userInput = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (userInput.current) {
-      console.log("focusing...");
-      userInput.current.focus();
-    }
-  }, []);
   return (
     <div className="word-guess-area">
       <ul>{listItems}</ul>
