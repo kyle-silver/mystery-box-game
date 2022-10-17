@@ -17,7 +17,7 @@
   color: var(--black);
 }
 
-.sidebar button {
+button {
   font-family: "Fira Code";
   border: none;
   background: none;
@@ -28,8 +28,15 @@
   padding-top: 0;
   padding-bottom: 0;
   margin: 0;
+  outline: none;
 }
 
-.sidebar button:hover {
+button:hover {
   color: var(--green);
+}
+
+button,
+button:active,
+button:focus {
+  outline: none;
 }

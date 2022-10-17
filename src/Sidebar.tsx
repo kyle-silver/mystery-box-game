@@ -1,6 +1,8 @@
 import { Puzzle } from "./Puzzle";
 import { Entry } from "./WordGuessArea";
 import "./Sidebar.css";
+import { useState } from "react";
+import { About } from "./About";
 
 export interface SidebarProps {
   puzzle: Puzzle;
@@ -8,8 +10,8 @@ export interface SidebarProps {
   entries: Entry[];
 }
 
-export function Sidebar(props: SidebarProps): JSX.Element {
-  const { puzzle, setPuzzle, entries } = props;
+export function Sidebar({ puzzle, setPuzzle, entries }: SidebarProps): JSX.Element {
+  const [showAbout, setShowAbout] = useState(false);
   const accepted = entries.filter((entry) => entry.accepted).length;
   return (
     <>
@@ -20,10 +22,11 @@ export function Sidebar(props: SidebarProps): JSX.Element {
           <button onClick={() => setPuzzle(null)}>NEW</button>
         </div>
         <br />
-        <div className="about" tabIndex={2}>
-          <button onClick={() => console.log("hi")}>ABOUT</button>
+        <div className="about-button" tabIndex={2}>
+          <button onClick={() => setShowAbout(!showAbout)}>ABOUT</button>
         </div>
       </div>
+      <About show={showAbout} setShow={setShowAbout} />
     </>
   );
 }
@@ -37,11 +40,9 @@ export function LoadingSidebar(): JSX.Element {
         <button>NEW</button>
       </div>
       <br />
-      <div className="about" tabIndex={2}>
-        <button onClick={() => console.log("hi")}>ABOUT</button>
+      <div className="about-button" tabIndex={2}>
+        <button>ABOUT</button>
       </div>
     </div>
   );
 }
-
-export {};
