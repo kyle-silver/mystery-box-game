@@ -8,10 +8,22 @@
   --white: #ffffff;
 }
 
+@media screen and (max-width: 500px) {
+  :root {
+    --font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 501px) {
+  :root {
+    --font-size: 3rem;
+  }
+}
+
 body {
   font-family: "Fira Code";
   font-weight: 700;
-  font-size: 40pt;
+  font-size: var(--font-size);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

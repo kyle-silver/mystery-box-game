@@ -3,6 +3,7 @@ import { Entry } from "./WordGuessArea";
 import "./Sidebar.css";
 import { useState } from "react";
 import { About } from "./About";
+import { Timer } from "./Timer";
 
 export interface SidebarProps {
   puzzle: Puzzle;
@@ -18,6 +19,7 @@ export function Sidebar({ puzzle, setPuzzle, entries }: SidebarProps): JSX.Eleme
       <div className="sidebar">
         <p className="puzzle-input">{puzzle.input.toUpperCase()}</p>
         <p className="counter">[{accepted}/8]</p>
+        <Timer secondsAtStart={60} />
         <div tabIndex={1}>
           <button onClick={() => setPuzzle(null)}>NEW</button>
         </div>

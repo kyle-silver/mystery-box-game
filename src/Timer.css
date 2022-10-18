@@ -1,0 +1,7 @@
+p.timer {
+  color: var(--black);
+}
+
+p.timer-expired {
+  color: var(--red);
+}

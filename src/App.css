@@ -2,7 +2,7 @@ input {
   border: 0;
   font-family: "Fira Code";
   font-weight: 700;
-  font-size: 40pt;
+  font-size: var(--font-size);
   caret-color: transparent;
 }
 
