@@ -1,37 +1,34 @@
-import { Puzzle } from "./Puzzle";
-import { Entry } from "./WordGuessArea";
 import "./Sidebar.css";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
-import { State } from "./App";
+import { GameState, Options } from "./App";
 
 export interface SidebarProps {
-  entries: Entry[];
-  puzzle: State<Puzzle | null>;
-  peaceful: State<boolean>;
-  dark: State<boolean>;
+  state: GameState;
+  setState: Dispatch<SetStateAction<GameState | null>>;
+  options: Options;
+  setOptions: Dispatch<SetStateAction<Options>>;
 }
 
-export function Sidebar({ puzzle, entries, peaceful, dark }: SidebarProps): JSX.Element {
+export function Sidebar({ state, setState, options, setOptions }: SidebarProps): JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
-  const [puzzleValue, setPuzzle] = puzzle;
-  const accepted = entries.filter((entry) => entry.accepted).length;
+  const accepted = state.entries.filter((entry) => entry.accepted).length;
   return (
     <>
       <div className="sidebar">
-        <p className="puzzle-input">{puzzleValue?.input.toUpperCase()}</p>
+        <p className="puzzle-input">{state.puzzle.input.toUpperCase()}</p>
         <p className="counter">[{accepted}/8]</p>
-        {!peaceful[0] && <Timer secondsAtStart={60} />}
+        {!options.peaceful && <Timer secondsAtStart={60} />}
         <div tabIndex={1}>
-          <button onClick={() => setPuzzle(null)}>NEW</button>
+          <button onClick={() => setState(null)}>NEW</button>
         </div>
         <br />
         <div className="about-button" tabIndex={2}>
           <button onClick={() => setShowAbout(!showAbout)}>ABOUT</button>
         </div>
       </div>
-      <About show={[showAbout, setShowAbout]} peaceful={peaceful} dark={dark} />
+      <About show={showAbout} setShow={setShowAbout} options={options} setOptions={setOptions} />
     </>
   );
 }

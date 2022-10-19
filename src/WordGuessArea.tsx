@@ -1,4 +1,5 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
+import { GameState } from "./App";
 import { Keyboard } from "./Keyboard";
 import { Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
@@ -21,20 +22,22 @@ function acceptable(guess: string, puzzle: Puzzle, entries: Entry[]): boolean {
 }
 
 export interface WordGuessProps {
-  puzzle: Puzzle;
-  entries: Entry[];
-  setEntries: React.Dispatch<React.SetStateAction<Entry[]>>;
+  state: GameState;
+  setState: Dispatch<SetStateAction<GameState>>;
 }
 
-export function WordGuessArea(props: WordGuessProps) {
-  const { puzzle, entries, setEntries: onEntryChange } = props;
-  const listItems = entries.map(WordListEntry);
+export function WordGuessArea({ state, setState }: WordGuessProps) {
+  const listItems = state.entries.map(WordListEntry);
   return (
     <div className="word-guess-area">
       <ul>{listItems}</ul>
       <Keyboard
         onSubmit={(input) => {
-          onEntryChange([...entries, { word: input, accepted: acceptable(input, puzzle, entries) }]);
+          const entries = [...state.entries, { word: input, accepted: acceptable(input, state.puzzle, state.entries) }];
+          setState({
+            ...state,
+            entries,
+          });
         }}
       />
     </div>

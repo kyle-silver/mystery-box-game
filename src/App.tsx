@@ -1,44 +1,53 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Puzzle, randomPuzzle } from "./Puzzle";
 import { LoadingSidebar, Sidebar } from "./Sidebar";
 import { EmptyWordGuessArea, Entry, WordGuessArea } from "./WordGuessArea";
 import "./App.css";
+import { ColorTheme, LIGHT_MODE, setPalette } from "./Colors";
 
-export type State<T> = [value: T, setValue: React.Dispatch<React.SetStateAction<T>>];
+export interface GameState {
+  entries: Entry[];
+  puzzle: Puzzle;
+}
+
+export interface Options {
+  peaceful: boolean;
+  theme: ColorTheme;
+}
 
 function App() {
-  const [entries, setEntries] = useState<Entry[]>([]);
-  const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
-  const peaceful = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [state, setState] = useState<GameState | null>(null);
+
+  const [options, setOptions] = useState<Options>({
+    peaceful: false,
+    theme: LIGHT_MODE,
+  });
 
   // retrieve the puzzle
   useEffect(() => {
     async function retrieve() {
       const retrieved = await randomPuzzle();
-      setEntries([]);
-      setPuzzle(retrieved);
+      setState({
+        ...state,
+        entries: [],
+        puzzle: retrieved,
+      });
     }
-    if (puzzle === null) {
+    if (state === null) {
       retrieve();
     }
-  }, [puzzle]);
+  }, [state]);
 
   // set the color theme
   useEffect(() => {
-    const root = document.documentElement;
-    const style = getComputedStyle(root);
-    const white = style.getPropertyValue("--white");
-    const black = style.getPropertyValue("--black");
-    root.style.setProperty("--white", black);
-    root.style.setProperty("--black", white);
-  }, [darkMode]);
+    setPalette(options.theme);
+  }, [options]);
 
-  if (puzzle) {
+  if (state?.puzzle) {
     return (
       <div className="container">
-        <Sidebar entries={entries} puzzle={[puzzle, setPuzzle]} peaceful={peaceful} dark={[darkMode, setDarkMode]} />
-        <WordGuessArea puzzle={puzzle} entries={entries} setEntries={setEntries} />
+        <Sidebar state={state} setState={setState} options={options} setOptions={setOptions} />
+        <WordGuessArea state={state} setState={setState as Dispatch<SetStateAction<GameState>>} />
       </div>
     );
   }

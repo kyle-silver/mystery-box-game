@@ -1,16 +1,16 @@
 import useEventListener from "@use-it/event-listener";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import "./About.css";
-import { State } from "./App";
+import { Options } from "./App";
+import { DARK_MODE, LIGHT_MODE } from "./Colors";
 
 interface OptionProps {
-  state: State<boolean>;
   title: string;
   description: string;
+  children: React.ReactNode;
 }
 
-function Option({ state, title, description }: OptionProps): JSX.Element {
-  const [value, setValue] = state;
+function Option({ title, description, children }: OptionProps): JSX.Element {
   return (
     <>
       <div>
@@ -18,15 +18,7 @@ function Option({ state, title, description }: OptionProps): JSX.Element {
           <b>{title}</b>
         </p>
       </div>
-      <div>
-        <input
-          type="checkbox"
-          checked={value}
-          onChange={() => {
-            setValue(!value);
-          }}
-        />
-      </div>
+      <div>{children}</div>
       <div>
         <p className="option-table">{description}</p>
       </div>
@@ -35,13 +27,13 @@ function Option({ state, title, description }: OptionProps): JSX.Element {
 }
 
 export interface AboutProps {
-  show: State<boolean>;
-  peaceful: State<boolean>;
-  dark: State<boolean>;
+  show: boolean;
+  setShow: Dispatch<SetStateAction<boolean>>;
+  options: Options;
+  setOptions: Dispatch<SetStateAction<Options>>;
 }
 
-export function About({ show, peaceful, dark }: AboutProps): JSX.Element {
-  const [showAbout, setShow] = show;
+export function About({ show, setShow, options, setOptions }: AboutProps): JSX.Element {
   useEventListener("keydown", (event) => {
     const { key } = event as KeyboardEvent;
     if (key === "Escape") {
@@ -54,7 +46,7 @@ export function About({ show, peaceful, dark }: AboutProps): JSX.Element {
     <div
       className="about-container"
       style={{
-        display: showAbout ? "block" : "none",
+        display: show ? "block" : "none",
       }}
     >
       <div className="about">
@@ -65,8 +57,25 @@ export function About({ show, peaceful, dark }: AboutProps): JSX.Element {
           veniam quod inventore in optio recusandae culpa dicta itaque.
         </p>
         <div className="options">
-          <Option state={peaceful} title="Peaceful mode" description="Play without a timer" />
-          <Option state={dark} title="Dark mode" description="Invert background and foreground colors" />
+          <Option title="Peaceful mode" description="Play without a timer">
+            <input
+              type="checkbox"
+              checked={options.peaceful}
+              onChange={() => {
+                setOptions({ ...options, peaceful: !options.peaceful });
+              }}
+            />
+          </Option>
+          <Option title="Dark mode" description="Invert foreground and background colors">
+            <input
+              type="checkbox"
+              checked={options.theme === DARK_MODE}
+              onChange={() => {
+                const theme = options.theme === LIGHT_MODE ? DARK_MODE : LIGHT_MODE;
+                setOptions({ ...options, theme });
+              }}
+            />
+          </Option>
         </div>
       </div>
     </div>
