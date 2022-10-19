@@ -4,22 +4,25 @@ import "./Sidebar.css";
 import { useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
+import { State } from "./App";
 
 export interface SidebarProps {
-  puzzle: Puzzle;
-  setPuzzle: React.Dispatch<React.SetStateAction<Puzzle | null>>;
   entries: Entry[];
+  puzzle: State<Puzzle | null>;
+  peaceful: State<boolean>;
+  dark: State<boolean>;
 }
 
-export function Sidebar({ puzzle, setPuzzle, entries }: SidebarProps): JSX.Element {
+export function Sidebar({ puzzle, entries, peaceful, dark }: SidebarProps): JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
+  const [puzzleValue, setPuzzle] = puzzle;
   const accepted = entries.filter((entry) => entry.accepted).length;
   return (
     <>
       <div className="sidebar">
-        <p className="puzzle-input">{puzzle.input.toUpperCase()}</p>
+        <p className="puzzle-input">{puzzleValue?.input.toUpperCase()}</p>
         <p className="counter">[{accepted}/8]</p>
-        <Timer secondsAtStart={60} />
+        {!peaceful[0] && <Timer secondsAtStart={60} />}
         <div tabIndex={1}>
           <button onClick={() => setPuzzle(null)}>NEW</button>
         </div>
@@ -28,7 +31,7 @@ export function Sidebar({ puzzle, setPuzzle, entries }: SidebarProps): JSX.Eleme
           <button onClick={() => setShowAbout(!showAbout)}>ABOUT</button>
         </div>
       </div>
-      <About show={showAbout} setShow={setShowAbout} />
+      <About show={[showAbout, setShowAbout]} peaceful={peaceful} dark={dark} />
     </>
   );
 }
