@@ -12,17 +12,19 @@ interface OptionProps {
 
 function Option({ title, description, children }: OptionProps): JSX.Element {
   return (
-    <>
-      <div>
-        <p className="option-table">
-          <b>{title}</b>
-        </p>
+    <div className="option">
+      <div className="option-control">
+        <div className="option-title">
+          <p>
+            <b>{title}</b>
+          </p>
+        </div>
+        <div className="option-input">{children}</div>
       </div>
-      <div>{children}</div>
-      <div>
-        <p className="option-table">{description}</p>
+      <div className="option-description">
+        <p>{description}</p>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -66,6 +68,7 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
               }}
             />
           </Option>
+          {/* <br /> */}
           <Option title="Dark mode" description="Invert foreground and background colors">
             <input
               type="checkbox"
