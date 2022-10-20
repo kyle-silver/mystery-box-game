@@ -30,16 +30,16 @@ export function WordGuessArea({ state, setState }: WordGuessProps) {
   const listItems = state.entries.map(WordListEntry);
   return (
     <div className="word-guess-area">
-      <ul>{listItems}</ul>
       <Keyboard
         onSubmit={(input) => {
-          const entries = [...state.entries, { word: input, accepted: acceptable(input, state.puzzle, state.entries) }];
+          const entries = [{ word: input, accepted: acceptable(input, state.puzzle, state.entries) }, ...state.entries];
           setState({
             ...state,
             entries,
           });
         }}
       />
+      <ul>{listItems}</ul>
     </div>
   );
 }
