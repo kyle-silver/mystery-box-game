@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { GameState } from "./App";
-import { Keyboard } from "./Keyboard";
+import { UserInputField } from "./Keyboard";
 import { Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
 
@@ -30,7 +30,7 @@ export function WordGuessArea({ state, setState }: WordGuessProps) {
   const listItems = state.entries.map(WordListEntry);
   return (
     <div className="word-guess-area">
-      <Keyboard
+      <UserInputField
         onSubmit={(input) => {
           const entries = [{ word: input, accepted: acceptable(input, state.puzzle, state.entries) }, ...state.entries];
           setState({

@@ -31,7 +31,7 @@ export interface KeyboardProps {
   onSubmit: (input: string) => void;
 }
 
-export function Keyboard(props: KeyboardProps): JSX.Element {
+export function UserInputField(props: KeyboardProps): JSX.Element {
   const [input, setInput] = useState("");
 
   // we're kinda implementing our own custom text field here, which is BAD and

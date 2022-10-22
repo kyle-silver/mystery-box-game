@@ -5,6 +5,8 @@
   padding-left: 10px;
   color: var(--gray);
   font-weight: 700;
+  font-weight: 700;
+  font-size: var(--font-size);
 }
 
 .word-guess-area p {
