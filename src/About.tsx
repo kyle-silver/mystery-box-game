@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import "./About.css";
 import { Options } from "./App";
 import { DARK_MODE, LIGHT_MODE } from "./Colors";
+import { DurationPicker } from "./DurationPicker";
 
 interface OptionProps {
   title: string;
@@ -68,7 +69,6 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
               }}
             />
           </Option>
-          {/* <br /> */}
           <Option title="Dark mode" description="Invert foreground and background colors">
             <input
               type="checkbox"
@@ -76,6 +76,19 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
               onChange={() => {
                 const theme = options.theme === LIGHT_MODE ? DARK_MODE : LIGHT_MODE;
                 setOptions({ ...options, theme });
+              }}
+            />
+          </Option>
+          <Option title="Timer" description="Test your skill">
+            <DurationPicker
+              minutes={options.minutes}
+              seconds={options.seconds}
+              onChange={(minutes, seconds) => {
+                setOptions({
+                  ...options,
+                  minutes,
+                  seconds,
+                });
               }}
             />
           </Option>

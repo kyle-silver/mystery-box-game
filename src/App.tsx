@@ -13,6 +13,8 @@ export interface GameState {
 export interface Options {
   peaceful: boolean;
   theme: ColorTheme;
+  minutes: number;
+  seconds: number;
 }
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
   const [options, setOptions] = useState<Options>({
     peaceful: false,
     theme: LIGHT_MODE,
+    minutes: 1,
+    seconds: 0,
   });
 
   // retrieve the puzzle
