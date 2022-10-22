@@ -1,6 +1,7 @@
 import useEventListener from "@use-it/event-listener";
 import { useState } from "react";
 import Keyboard from "react-simple-keyboard";
+import { MobileView } from "react-device-detect";
 import "react-simple-keyboard/build/css/index.css";
 
 const VIRTUAL_KEYBOARD_CODES = new Map([
@@ -70,21 +71,23 @@ export function UserInputField({ onSubmit }: KeyboardProps): JSX.Element {
         {input}
         <span className="blink">_</span>
       </p>
-      <div className="mobile-keyboard">
-        <Keyboard
-          layout={{
-            default: ["q w e r t y u i o p", "a s d f g h j k l", "{enter} z x c v b n m {bksp}"],
-          }}
-          display={{
-            "{bksp}": "<||",
-            "{enter}": "&nbsp;&#x21AA;&nbsp;",
-          }}
-          onKeyPress={(button: string) => {
-            let key = VIRTUAL_KEYBOARD_CODES.get(button) || button;
-            handleKey(key);
-          }}
-        />
-      </div>
+      <MobileView>
+        <div className="mobile-keyboard">
+          <Keyboard
+            layout={{
+              default: ["q w e r t y u i o p", "a s d f g h j k l", "{enter} z x c v b n m {bksp}"],
+            }}
+            display={{
+              "{bksp}": "<||",
+              "{enter}": "&nbsp;&#x21AA;&nbsp;",
+            }}
+            onKeyPress={(button: string) => {
+              let key = VIRTUAL_KEYBOARD_CODES.get(button) || button;
+              handleKey(key);
+            }}
+          />
+        </div>
+      </MobileView>
     </div>
   );
 }
