@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { GameState } from "./App";
-import { UserInputField } from "./Keyboard";
+import { UserInputField } from "./UserInputField";
 import { Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
 
@@ -22,6 +22,7 @@ function acceptable(guess: string, puzzle: Puzzle, entries: Entry[]): boolean {
 }
 
 export interface WordGuessProps {
+  showKeyboard?: boolean;
   state: GameState;
   setState: Dispatch<SetStateAction<GameState>>;
 }

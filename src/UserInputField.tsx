@@ -1,5 +1,12 @@
 import useEventListener from "@use-it/event-listener";
 import { useState } from "react";
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
+
+const VIRTUAL_KEYBOARD_CODES = new Map([
+  ["{bksp}", "Backspace"],
+  ["{enter}", "Enter"],
+]);
 
 function computeNewInput(char: string, input: string): string {
   // lowercase letters only
@@ -31,18 +38,15 @@ export interface KeyboardProps {
   onSubmit: (input: string) => void;
 }
 
-export function UserInputField(props: KeyboardProps): JSX.Element {
+export function UserInputField({ onSubmit }: KeyboardProps): JSX.Element {
   const [input, setInput] = useState("");
 
-  // we're kinda implementing our own custom text field here, which is BAD and
-  // we should FEEL BAD about doing it.
-  useEventListener("keydown", (event) => {
-    const { key } = event as KeyboardEvent;
+  function handleKey(key: string) {
     if (key === "Enter") {
       if (input.length < 4) {
         return;
       }
-      props.onSubmit(input);
+      onSubmit(input);
       setInput("");
     } else if (key === "Backspace") {
       const newInput = backspace(input);
@@ -51,6 +55,13 @@ export function UserInputField(props: KeyboardProps): JSX.Element {
       const newInput = computeNewInput(key, input);
       setInput(newInput);
     }
+  }
+
+  // we're kinda implementing our own custom text field here, which is BAD and
+  // we should FEEL BAD about doing it.
+  useEventListener("keydown", (event) => {
+    const { key } = event as KeyboardEvent;
+    handleKey(key);
   });
 
   return (
@@ -59,6 +70,21 @@ export function UserInputField(props: KeyboardProps): JSX.Element {
         {input}
         <span className="blink">_</span>
       </p>
+      <div className="mobile-keyboard">
+        <Keyboard
+          layout={{
+            default: ["q w e r t y u i o p", "a s d f g h j k l", "{enter} z x c v b n m {bksp}"],
+          }}
+          display={{
+            "{bksp}": "<||",
+            "{enter}": "&nbsp;&#x21AA;&nbsp;",
+          }}
+          onKeyPress={(button: string) => {
+            let key = VIRTUAL_KEYBOARD_CODES.get(button) || button;
+            handleKey(key);
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -27,3 +27,22 @@
   padding-left: 0;
   margin-top: 0;
 }
+
+.mobile-keyboard {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.mobile-keyboard .hg-theme-default {
+  font-family: "Fira Code";
+  font-weight: 300;
+}
+
+.mobile-keyboard .hg-button-enter {
+  letter-spacing: -1.3px;
+}

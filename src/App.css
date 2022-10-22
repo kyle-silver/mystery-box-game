@@ -21,10 +21,3 @@ blink,
     opacity: 0;
   }
 }
-
-.mobile-keyboard {
-  position: fixed;
-  width: 98%;
-  bottom: 0;
-  z-index: 2;
-}
