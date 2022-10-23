@@ -14,13 +14,13 @@ export interface SidebarProps {
 export function Sidebar({ state, setState, options, setOptions }: SidebarProps): JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
   const accepted = state.entries.filter((entry) => entry.accepted).length;
-  const secondsAtStart = Number(options.minutes) * 60 + Number(options.seconds);
+  const secondsAtStart = Number(options.time.minutes) * 60 + Number(options.time.seconds);
   return (
     <>
       <div className="sidebar">
         <p className="puzzle-input">{state.puzzle.input.toUpperCase()}</p>
         <p className="counter">[{accepted}/8]</p>
-        {!options.peaceful && <Timer secondsAtStart={secondsAtStart} />}
+        {!options.peaceful && <Timer state={state} setState={setState as Dispatch<SetStateAction<GameState>>} />}
         <div tabIndex={1}>
           <button onClick={() => setState(null)}>NEW</button>
         </div>

@@ -81,13 +81,12 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
           </Option>
           <Option title="Timer" description="Test your skill">
             <DurationPicker
-              minutes={options.minutes}
-              seconds={options.seconds}
-              onChange={(minutes, seconds) => {
+              minutes={options.time.minutes}
+              seconds={options.time.seconds}
+              onChange={(time) => {
                 setOptions({
                   ...options,
-                  minutes,
-                  seconds,
+                  time,
                 });
               }}
             />

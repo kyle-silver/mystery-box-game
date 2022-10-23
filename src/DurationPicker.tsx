@@ -1,38 +1,41 @@
-type Duration = [minutes: number, seconds: number];
+export interface Duration {
+  minutes: number;
+  seconds: number;
+}
 
-function normalize(minutes: number, seconds: number): Duration {
+export function normalize(minutes: number, seconds: number): Duration {
   if (seconds < 0) {
     const fullMinutesUnder = Math.ceil(seconds / 60) + 1;
     const secondsToAdd = fullMinutesUnder * 60;
     const updatedSeconds = seconds + secondsToAdd;
     const updatedMinutes = minutes - fullMinutesUnder;
     if (updatedMinutes < 0) {
-      return [0, 0];
+      return { minutes: 0, seconds: 0 };
     }
-    return [updatedMinutes, updatedSeconds];
+    return { minutes: updatedMinutes, seconds: updatedSeconds };
   } else if (seconds < 60) {
-    return [minutes, seconds];
+    return { minutes, seconds };
   } else {
     const fullMinutesOver = Math.floor(seconds / 60);
     const secondsToSubtract = fullMinutesOver * 60;
     const updatedSeconds = seconds - secondsToSubtract;
     const updatedMinutes = minutes + fullMinutesOver;
     if (updatedMinutes > 99) {
-      return [99, 59];
+      return { minutes: 99, seconds: 59 };
     }
-    return [updatedMinutes, updatedSeconds];
+    return { minutes: updatedMinutes, seconds: updatedSeconds };
   }
 }
 
 function parseDuration(duration: string): Duration {
   const [minutes, seconds] = duration.split(":").map(parseInt);
-  return [minutes, seconds];
+  return { minutes, seconds };
 }
 
 export interface DurationPickerProps {
   minutes: number;
   seconds: number;
-  onChange: (minutes: number, seconds: number) => void;
+  onChange: (duration: Duration) => void;
 }
 
 export function DurationPicker({ minutes, seconds, onChange }: DurationPickerProps): JSX.Element {
@@ -52,8 +55,8 @@ export function DurationPicker({ minutes, seconds, onChange }: DurationPickerPro
             console.log("Skipping key input");
             return;
           }
-          const [minutes, seconds] = parseDuration(event.target.value);
-          onChange(minutes, seconds);
+          const duration = parseDuration(event.target.value);
+          onChange(duration);
         }}
         onKeyDown={({ key }) => {
           if (key.match("\\d")) {
@@ -61,19 +64,19 @@ export function DurationPicker({ minutes, seconds, onChange }: DurationPickerPro
             // consequences
             const minutes = parseInt(mins.charAt(1) + secs.charAt(0));
             const seconds = parseInt(secs.charAt(1) + key);
-            onChange(minutes, seconds);
+            onChange({ minutes, seconds });
           } else if (key === "Backspace") {
             const minutes = parseInt(mins.charAt(0));
             const seconds = parseInt(mins.charAt(1) + secs.charAt(0));
-            onChange(minutes, seconds);
+            onChange({ minutes, seconds });
           } else if (key === "ArrowUp") {
-            onChange(...normalize(minutes, seconds + 1));
+            onChange(normalize(minutes, seconds + 1));
           } else if (key === "ArrowDown") {
-            onChange(...normalize(minutes, seconds - 1));
+            onChange(normalize(minutes, seconds - 1));
           }
         }}
         onBlur={() => {
-          onChange(...normalize(minutes, seconds));
+          onChange(normalize(minutes, seconds));
         }}
       />
     </div>
