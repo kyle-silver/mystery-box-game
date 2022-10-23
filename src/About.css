@@ -48,17 +48,9 @@
 }
 
 .option-control {
-  display: grid;
-  grid-template-columns: 75% 25%;
+  display: flex;
+  justify-content: space-between;
   height: 2rem;
-}
-
-.option-title {
-  width: 15rem;
-}
-
-.option-description {
-  width: 27rem;
 }
 
 .option {
@@ -67,12 +59,12 @@
 
 .duration-picker {
   font-size: 1.3rem;
-  display: flex;
 }
 
 .duration-picker input {
-  width: 3rem;
+  margin-top: -1.5px;
   font-size: 1.3rem;
+  width: 4rem;
   color: var(--black);
   background-color: var(--white);
   border: 1.5px solid;
