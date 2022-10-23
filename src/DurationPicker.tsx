@@ -17,6 +17,9 @@ function normalize(minutes: number, seconds: number): Duration {
     const secondsToSubtract = fullMinutesOver * 60;
     const updatedSeconds = seconds - secondsToSubtract;
     const updatedMinutes = minutes + fullMinutesOver;
+    if (updatedMinutes > 99) {
+      return [99, 59];
+    }
     return [updatedMinutes, updatedSeconds];
   }
 }
@@ -38,19 +41,6 @@ export function DurationPicker({ minutes, seconds, onChange }: DurationPickerPro
   const display = `${mins}:${secs}`;
   return (
     <div className="duration-picker">
-      {/* <TwoDigitInput
-        value={minutes}
-        onChange={(minutes) => {
-          onChange(minutes, seconds);
-        }}
-      />
-      <span className="time-separator">:</span>
-      <TwoDigitInput
-        value={seconds}
-        onChange={(seconds) => {
-          onChange(minutes, seconds);
-        }}
-      /> */}
       <input
         className="duration-value-picker"
         type="text"
@@ -81,6 +71,9 @@ export function DurationPicker({ minutes, seconds, onChange }: DurationPickerPro
           } else if (key === "ArrowDown") {
             onChange(...normalize(minutes, seconds - 1));
           }
+        }}
+        onBlur={() => {
+          onChange(...normalize(minutes, seconds));
         }}
       />
     </div>

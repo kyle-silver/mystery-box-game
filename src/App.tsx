@@ -23,8 +23,8 @@ function App() {
   const [options, setOptions] = useState<Options>({
     peaceful: false,
     theme: LIGHT_MODE,
-    minutes: 1,
-    seconds: 0,
+    minutes: 2,
+    seconds: 30,
   });
 
   // retrieve the puzzle
@@ -45,7 +45,7 @@ function App() {
   // set the color theme
   useEffect(() => {
     setPalette(options.theme);
-  }, [options]);
+  }, [options.theme]);
 
   if (state?.puzzle) {
     return (
