@@ -14,7 +14,6 @@ export interface SidebarProps {
 export function Sidebar({ state, setState, options, setOptions }: SidebarProps): JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
   const accepted = state.entries.filter((entry) => entry.accepted).length;
-  const secondsAtStart = Number(options.time.minutes) * 60 + Number(options.time.seconds);
   return (
     <>
       <div className="sidebar">

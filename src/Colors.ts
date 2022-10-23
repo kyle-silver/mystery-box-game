@@ -1,4 +1,5 @@
 export interface ColorTheme {
+  name: string;
   white: string;
   black: string;
   gray: string;
@@ -7,6 +8,7 @@ export interface ColorTheme {
 }
 
 export const LIGHT_MODE: ColorTheme = {
+  name: "light_mode",
   white: "#ffffff",
   black: "#453f3c",
   gray: "#938c8a",
@@ -15,7 +17,7 @@ export const LIGHT_MODE: ColorTheme = {
 };
 
 export const DARK_MODE: ColorTheme = {
-  // it's gruvbox!
+  name: "gruvbox",
   white: "#282828",
   black: "#ebdbb2",
   gray: "#928374",

@@ -72,9 +72,9 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
           <Option title="Dark mode" description="Invert foreground and background colors">
             <input
               type="checkbox"
-              checked={options.theme === DARK_MODE}
+              checked={options.theme.name === DARK_MODE.name}
               onChange={() => {
-                const theme = options.theme === LIGHT_MODE ? DARK_MODE : LIGHT_MODE;
+                const theme = options.theme.name === LIGHT_MODE.name ? DARK_MODE : LIGHT_MODE;
                 setOptions({ ...options, theme });
               }}
             />

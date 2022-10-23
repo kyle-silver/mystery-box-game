@@ -19,16 +19,24 @@ export interface Options {
 }
 
 function App() {
-  const [state, setState] = useState<GameState | null>(null);
+  // load user settings from local storage if possible, otherwise use the app
+  // defaults
+  const storedOptions = JSON.parse(localStorage.getItem("options") ?? "null");
+  const [options, setOptions] = useState<Options>(
+    storedOptions || {
+      peaceful: false,
+      theme: LIGHT_MODE,
+      time: {
+        minutes: 2,
+        seconds: 30,
+      },
+    }
+  );
 
-  const [options, setOptions] = useState<Options>({
-    peaceful: false,
-    theme: LIGHT_MODE,
-    time: {
-      minutes: 2,
-      seconds: 30,
-    },
-  });
+  // if there was previously a game in progress, preference that over creating a
+  // new game
+  const storedState = JSON.parse(localStorage.getItem("state") ?? "null");
+  const [state, setState] = useState<GameState | null>(storedState);
 
   // retrieve the puzzle
   useEffect(() => {
@@ -41,7 +49,6 @@ function App() {
         remaining: options.time,
       };
       setState(updated);
-      localStorage.setItem("puzzle", JSON.stringify(retrieved));
     }
     if (state === null) {
       retrieve();
@@ -57,19 +64,16 @@ function App() {
   // remaining
   useEffect(() => {
     function persistBeforeUnload(_event: BeforeUnloadEvent) {
-      console.log("running");
-      if (state?.remaining) {
-        localStorage.setItem("remaining", JSON.stringify(state.remaining));
-      }
-      if (state?.entries) {
-        localStorage.setItem("entries", JSON.stringify(state.entries));
+      localStorage.setItem("options", JSON.stringify(options));
+      if (state) {
+        localStorage.setItem("state", JSON.stringify(state));
       }
     }
     window.addEventListener("beforeunload", persistBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", persistBeforeUnload);
     };
-  }, [state]);
+  }, [state, options]);
 
   if (state?.puzzle) {
     return (
