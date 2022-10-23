@@ -2,6 +2,10 @@ p.timer {
   color: var(--black);
 }
 
+p.timer-accepted {
+  color: var(--green);
+}
+
 p.timer-expired {
   color: var(--red);
 }

@@ -10,18 +10,23 @@ export interface TimerProps {
 
 export function Timer({ state, setState }: TimerProps): JSX.Element {
   useEffect(() => {
-    const interval = setInterval(() => {
-      const remaining = normalize(state.remaining.minutes, state.remaining.seconds - 1);
-      setState({
-        ...state,
-        remaining,
-      });
-    }, 1000);
+    let interval: NodeJS.Timer | undefined;
+    if (!state.paused) {
+      interval = setInterval(() => {
+        const remaining = normalize(state.remaining.minutes, state.remaining.seconds - 1);
+        setState({
+          ...state,
+          remaining,
+        });
+      }, 1000);
+    }
     return () => clearInterval(interval);
   }, [state, setState]);
   return (
     <div>
-      <p className="timer">{`${state.remaining.minutes.toFixed(0)}:${state.remaining.seconds.toFixed(0).padStart(2, "0")}`}</p>
+      <p className={state.paused ? "timer-accepted" : "timer"}>{`${state.remaining.minutes.toFixed(0)}:${state.remaining.seconds
+        .toFixed(0)
+        .padStart(2, "0")}`}</p>
     </div>
   );
 }

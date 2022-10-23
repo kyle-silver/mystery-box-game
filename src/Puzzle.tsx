@@ -1,21 +1,23 @@
-export class Puzzle {
+export interface Puzzle {
   input: string;
   solutions: string[];
+}
 
-  constructor(input: string, solutions: string[]) {
-    const shuffled = input
-      .split("")
-      .sort(function () {
-        return 0.5 - Math.random();
-      })
-      .join("");
-    this.input = shuffled;
-    this.solutions = solutions;
-  }
+export function puzzle(input: string, solutions: string[]): Puzzle {
+  const shuffled = input
+    .split("")
+    .sort(function () {
+      return 0.5 - Math.random();
+    })
+    .join("");
+  return {
+    input: shuffled,
+    solutions,
+  };
+}
 
-  isSolution(word: string): boolean {
-    return this.solutions.includes(word);
-  }
+export function isSolution(puzzle: Puzzle, word: string): boolean {
+  return puzzle.solutions.includes(word);
 }
 
 export async function randomPuzzle(): Promise<Puzzle> {
@@ -23,5 +25,5 @@ export async function randomPuzzle(): Promise<Puzzle> {
   const response = await window.fetch(`https://raw.githubusercontent.com/kyle-silver/mystery-box-puzzles/main/puzzles/${index}.json`);
   const json = await response.json();
   console.log("retrieved JSON: ", json);
-  return new Puzzle(json["input"], json["solutions"]);
+  return puzzle(json["input"], json["solutions"]);
 }

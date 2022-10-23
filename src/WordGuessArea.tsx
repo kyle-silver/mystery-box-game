@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { GameState } from "./App";
 import { UserInputField } from "./UserInputField";
-import { Puzzle } from "./Puzzle";
+import { isSolution, Puzzle } from "./Puzzle";
 import "./WordGuessArea.css";
 
 export interface Entry {
@@ -18,7 +18,7 @@ function WordListEntry(entry: Entry, index: number): JSX.Element {
 }
 
 function acceptable(guess: string, puzzle: Puzzle, entries: Entry[]): boolean {
-  return puzzle.isSolution(guess) && !entries.map((entry) => entry.word).includes(guess);
+  return isSolution(puzzle, guess) && !entries.map((entry) => entry.word).includes(guess);
 }
 
 export interface WordGuessProps {

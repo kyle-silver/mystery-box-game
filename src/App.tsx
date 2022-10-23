@@ -5,11 +5,14 @@ import { EmptyWordGuessArea, Entry, WordGuessArea } from "./WordGuessArea";
 import "./App.css";
 import { ColorTheme, LIGHT_MODE, setPalette } from "./Colors";
 import { Duration } from "./DurationPicker";
+import { Sharing } from "./Share";
 
 export interface GameState {
   entries: Entry[];
   puzzle: Puzzle;
   remaining: Duration;
+  paused: boolean;
+  sharing: Sharing | null;
 }
 
 export interface Options {
@@ -47,6 +50,8 @@ function App() {
         entries: [],
         puzzle: retrieved,
         remaining: options.time,
+        paused: false,
+        sharing: null,
       };
       setState(updated);
     }

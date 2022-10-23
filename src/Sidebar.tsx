@@ -1,5 +1,5 @@
 import "./Sidebar.css";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
 import { GameState, Options } from "./App";
@@ -14,6 +14,16 @@ export interface SidebarProps {
 export function Sidebar({ state, setState, options, setOptions }: SidebarProps): JSX.Element {
   const [showAbout, setShowAbout] = useState(false);
   const accepted = state.entries.filter((entry) => entry.accepted).length;
+  // pause the timer when
+  useEffect(() => {
+    if (accepted >= 2 && !state.paused) {
+      setState({
+        ...state,
+        paused: true,
+      });
+    }
+    return () => {};
+  }, [accepted, state, setState]);
   return (
     <>
       <div className="sidebar">
