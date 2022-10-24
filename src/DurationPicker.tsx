@@ -27,28 +27,41 @@ export function normalize(minutes: number, seconds: number): Duration {
   }
 }
 
+export function display(duration: Duration, leadingMinuteZero?: boolean): string {
+  const minutes = leadingMinuteZero ? duration.minutes.toFixed(0).padStart(2, "0") : duration.minutes.toFixed(0);
+  const seconds = duration.seconds.toFixed(0).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
+export function asSeconds(duration: Duration): number {
+  return duration.minutes * 60 + duration.seconds;
+}
+
+export function subtract(minuend: Duration, subtrahend: Duration): Duration {
+  const first = asSeconds(minuend);
+  const second = asSeconds(subtrahend);
+  return normalize(0, first - second);
+}
+
 function parseDuration(duration: string): Duration {
   const [minutes, seconds] = duration.split(":").map(parseInt);
   return { minutes, seconds };
 }
 
 export interface DurationPickerProps {
-  minutes: number;
-  seconds: number;
+  duration: Duration;
   onChange: (duration: Duration) => void;
 }
 
-export function DurationPicker({ minutes, seconds, onChange }: DurationPickerProps): JSX.Element {
-  const mins = minutes.toFixed(0).padStart(2, "0");
-  const secs = seconds.toFixed(0).padStart(2, "0");
-  const display = `${mins}:${secs}`;
+export function DurationPicker({ duration, onChange }: DurationPickerProps): JSX.Element {
+  const [mins, secs] = display(duration, true).split(":");
   return (
     <div className="duration-picker">
       <input
         className="duration-value-picker"
         type="text"
         inputMode="numeric"
-        value={display}
+        value={display(duration, true)}
         onChange={(event) => {
           console.log(event);
           if (event.nativeEvent instanceof InputEvent) {
@@ -70,13 +83,13 @@ export function DurationPicker({ minutes, seconds, onChange }: DurationPickerPro
             const seconds = parseInt(mins.charAt(1) + secs.charAt(0));
             onChange({ minutes, seconds });
           } else if (key === "ArrowUp") {
-            onChange(normalize(minutes, seconds + 1));
+            onChange(normalize(duration.minutes, duration.seconds + 1));
           } else if (key === "ArrowDown") {
-            onChange(normalize(minutes, seconds - 1));
+            onChange(normalize(duration.minutes, duration.seconds - 1));
           }
         }}
         onBlur={() => {
-          onChange(normalize(minutes, seconds));
+          onChange(normalize(duration.minutes, duration.seconds));
         }}
       />
     </div>

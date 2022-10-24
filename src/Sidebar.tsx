@@ -3,6 +3,24 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
 import { GameState, Options } from "./App";
+import { shareString, shareable } from "./Share";
+
+function shouldPause(state: GameState, options: Options): boolean {
+  if (options.peaceful) {
+    return false;
+  }
+  if (state.paused) {
+    return false; // we only want to pause once
+  }
+  const accepted = state.entries.filter((entry) => entry.accepted).length;
+  if (accepted >= 2) {
+    return true;
+  }
+  if (state.remaining.minutes === 0 && state.remaining.seconds === 0) {
+    return true;
+  }
+  return false;
+}
 
 export interface SidebarProps {
   state: GameState;
@@ -16,14 +34,16 @@ export function Sidebar({ state, setState, options, setOptions }: SidebarProps):
   const accepted = state.entries.filter((entry) => entry.accepted).length;
   // pause the timer when
   useEffect(() => {
-    if (accepted >= 2 && !state.paused) {
+    if (shouldPause(state, options)) {
+      console.log("pausing!");
       setState({
         ...state,
         paused: true,
+        sharing: shareable(state, options),
       });
     }
     return () => {};
-  }, [accepted, state, setState]);
+  }, [accepted, state, setState, options]);
   return (
     <>
       <div className="sidebar">
@@ -34,6 +54,22 @@ export function Sidebar({ state, setState, options, setOptions }: SidebarProps):
           <button onClick={() => setState(null)}>NEW</button>
         </div>
         <br />
+        {state.paused && (
+          <>
+            <div>
+              <button
+                onClick={() => {
+                  if (state.sharing) {
+                    console.log(shareString(state.sharing));
+                  }
+                }}
+              >
+                SHARE
+              </button>
+            </div>
+            <br />
+          </>
+        )}
         <div className="about-button" tabIndex={2}>
           <button onClick={() => setShowAbout(!showAbout)}>ABOUT</button>
         </div>

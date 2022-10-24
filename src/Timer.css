@@ -6,6 +6,6 @@ p.timer-accepted {
   color: var(--green);
 }
 
-p.timer-expired {
+p.timer-rejected {
   color: var(--red);
 }
