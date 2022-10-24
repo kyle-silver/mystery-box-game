@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
 import { GameState, Options } from "./App";
-import { shareString, shareable } from "./Share";
+import { shareString, shareable, ShareButton } from "./Share";
 
 function shouldPause(state: GameState, options: Options): boolean {
   if (options.peaceful) {
@@ -54,19 +54,9 @@ export function Sidebar({ state, setState, options, setOptions }: SidebarProps):
           <button onClick={() => setState(null)}>NEW</button>
         </div>
         <br />
-        {state.paused && (
+        {state.sharing && (
           <>
-            <div>
-              <button
-                onClick={() => {
-                  if (state.sharing) {
-                    console.log(shareString(state.sharing));
-                  }
-                }}
-              >
-                SHARE
-              </button>
-            </div>
+            <ShareButton sharing={state.sharing} />
             <br />
           </>
         )}
