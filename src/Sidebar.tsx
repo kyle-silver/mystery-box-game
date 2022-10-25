@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { About } from "./About";
 import { Timer } from "./Timer";
 import { GameState, Options } from "./App";
-import { shareString, shareable, ShareButton } from "./Share";
+import { shareable, ShareButton } from "./Share";
 
 function shouldPause(state: GameState, options: Options): boolean {
   if (options.peaceful) {

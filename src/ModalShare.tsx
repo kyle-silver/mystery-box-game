@@ -1,6 +1,18 @@
-import { Copy } from "iconoir-react";
-import { isBrowser, isMobile } from "react-device-detect";
+import { Copy, ShareIos } from "iconoir-react";
+import { useEffect, useRef } from "react";
+import { isMobile } from "react-device-detect";
 import "./ModalShare.css";
+
+function Footer({ contents }: { contents: string }): JSX.Element {
+  if (isMobile) {
+    return <></>;
+  }
+  return (
+    <footer>
+      <p>hi</p>
+    </footer>
+  );
+}
 
 export interface ModalShareProps {
   contents: string;
@@ -9,6 +21,20 @@ export interface ModalShareProps {
 }
 
 export function ModalShare({ contents, show, onHide }: ModalShareProps): JSX.Element {
+  // hide when you click outside
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleClickOutside(event: Event) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onHide();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, onHide]);
+
   return (
     <div
       className="modal-share"
@@ -16,7 +42,7 @@ export function ModalShare({ contents, show, onHide }: ModalShareProps): JSX.Ele
         display: show ? "block" : "none",
       }}
     >
-      <div className="modal-content">
+      <div className="modal-content" ref={ref}>
         <h3>Share</h3>
         <div className="share-element">
           <div className="share-data">
@@ -29,20 +55,18 @@ export function ModalShare({ contents, show, onHide }: ModalShareProps): JSX.Ele
                   if (navigator.share) {
                     navigator.share({ text: contents });
                   } else {
-                    window.alert("Sharing is not available.");
+                    window.alert("Sharing is not available. Make sure you're using HTTPS");
                   }
                 } else {
                   navigator.clipboard.writeText(contents);
                 }
               }}
             >
-              <Copy />
+              {isMobile ? <ShareIos /> : <Copy />}
             </button>
           </div>
         </div>
-        <footer>
-          <p>footer content</p>
-        </footer>
+        <Footer contents={contents} />
       </div>
     </div>
   );
