@@ -1,0 +1,81 @@
+.modal-share {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+.modal-content {
+  font-family: "Lato", "sans serif";
+  margin: auto;
+  margin-top: 20%;
+  text-align: left;
+  color: var(--black);
+  background-color: var(--white);
+  width: min(80%, 35rem);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 10px;
+  filter: drop-shadow(3px 3px 5px var(--gray));
+}
+
+.modal-content h3 {
+  font-size: 1.5rem;
+}
+
+.modal-content p {
+  text-align: left;
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.share-element {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  vertical-align: middle;
+}
+
+.share-element .share-data {
+  text-align: left;
+  font-family: "Fira Code", "monospace";
+  font-weight: 700;
+  margin: unset;
+  border: 1px solid var(--gray);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: var(--stats-font-size);
+  border-radius: 3px 0px 0px 3px;
+  background-color: var(--half-tone-gray);
+}
+
+.share-element .copy-share-element {
+  font-family: "Fira Code", "monospace";
+  font-weight: 700;
+  border: 1px solid var(--gray);
+  border-left: 0;
+  border-radius: 0px 3px 3px 0px;
+  padding: 0 5px 0px 5px;
+  display: flex;
+  align-items: center;
+}
+
+.copy-share-element button {
+  font-size: 1.3rem;
+  padding: unset;
+}
+
+svg {
+  color: var(--black);
+  margin: 0 auto;
+  display: block;
+}
+
+svg:hover {
+  color: var(--green);
+  filter: drop-shadow(3px 3px 5px var(--green));
+}

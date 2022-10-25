@@ -5,17 +5,20 @@
   --green: #75bd8c;
   --red: #da7167;
   --white: #ffffff;
+  --half-tone-gray: #f0f0f0;
 }
 
 @media screen and (max-width: 500px) {
   :root {
     --font-size: 1.8rem;
+    --stats-font-size: 0.9rem;
   }
 }
 
 @media screen and (min-width: 501px) {
   :root {
     --font-size: 3rem;
+    --stats-font-size: 1.3rem;
   }
 }
 

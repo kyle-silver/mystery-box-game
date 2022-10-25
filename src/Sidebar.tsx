@@ -13,7 +13,7 @@ function shouldPause(state: GameState, options: Options): boolean {
     return false; // we only want to pause once
   }
   const accepted = state.entries.filter((entry) => entry.accepted).length;
-  if (accepted >= 2) {
+  if (accepted >= 8) {
     return true;
   }
   if (state.remaining.minutes === 0 && state.remaining.seconds === 0) {

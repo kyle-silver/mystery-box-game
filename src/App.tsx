@@ -74,9 +74,9 @@ function App() {
         localStorage.setItem("state", JSON.stringify(state));
       }
     }
-    window.addEventListener("beforeunload", persistBeforeUnload);
+    window.addEventListener("pagehide", persistBeforeUnload);
     return () => {
-      window.removeEventListener("beforeunload", persistBeforeUnload);
+      window.removeEventListener("pagehide", persistBeforeUnload);
     };
   }, [state, options]);
 

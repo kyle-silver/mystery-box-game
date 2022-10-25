@@ -5,6 +5,7 @@ export interface ColorTheme {
   gray: string;
   green: string;
   red: string;
+  halfToneGray: string;
 }
 
 export const LIGHT_MODE: ColorTheme = {
@@ -14,6 +15,7 @@ export const LIGHT_MODE: ColorTheme = {
   gray: "#938c8a",
   green: "#75bd8c",
   red: "#da7167",
+  halfToneGray: "#f5f5f5",
 };
 
 export const DARK_MODE: ColorTheme = {
@@ -23,6 +25,7 @@ export const DARK_MODE: ColorTheme = {
   gray: "#928374",
   green: "#ABB66F",
   red: "#DA7167",
+  halfToneGray: "#3c3836",
 };
 
 export function setPalette(theme: ColorTheme) {
@@ -32,4 +35,5 @@ export function setPalette(theme: ColorTheme) {
   style.setProperty("--gray", theme.gray);
   style.setProperty("--green", theme.green);
   style.setProperty("--red", theme.red);
+  style.setProperty("--half-tone-gray", theme.halfToneGray);
 }

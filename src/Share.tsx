@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { GameState, Options } from "./App";
 import { display, Duration, subtract } from "./DurationPicker";
+import { ModalShare } from "./ModalShare";
 
 export interface Sharing {
   puzzle: string;
@@ -29,15 +31,18 @@ export function shareString(sharing: Sharing): string {
 }
 
 export function ShareButton({ sharing }: { sharing: Sharing }): JSX.Element {
+  const [show, setShow] = useState(false);
   return (
     <div>
       <button
         onClick={() => {
           console.log(shareString(sharing));
+          setShow(true);
         }}
       >
         SHARE
       </button>
+      <ModalShare contents={shareString(sharing)} show={show} onHide={() => setShow(false)} />
     </div>
   );
 }
