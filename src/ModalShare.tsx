@@ -1,16 +1,28 @@
-import { Copy, ShareIos } from "iconoir-react";
+import { Copy, ShareIos, Twitter } from "iconoir-react";
 import { useEffect, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import "./ModalShare.css";
 
-function Footer({ contents }: { contents: string }): JSX.Element {
+function SocialMediaSharing({ contents }: { contents: string }): JSX.Element {
   if (isMobile) {
     return <></>;
   }
+  const encoded = encodeURIComponent(contents);
   return (
-    <footer>
-      <p>hi</p>
-    </footer>
+    <div className="socials">
+      <meta property="og:title" content={contents} />
+      <p className="share-text">&hellip;or share how you did on Twitter</p>
+      <div className="socials-carousel">
+        <button
+          onClick={() => {
+            const twitterLink = `https://twitter.com/intent/tweet?text=${encoded}`;
+            window.open(twitterLink, "_blank");
+          }}
+        >
+          <Twitter />
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -44,12 +56,18 @@ export function ModalShare({ contents, show, onHide }: ModalShareProps): JSX.Ele
     >
       <div className="modal-content" ref={ref}>
         <h3>Share</h3>
+        {isMobile ? (
+          <p className="share-text">Show your friends how you did</p>
+        ) : (
+          <p className="share-text">Copy your score to the clipboard</p>
+        )}
         <div className="share-element">
           <div className="share-data">
             <p>{contents}</p>
           </div>
           <div className="copy-share-element">
             <button
+              className="copy-button"
               onClick={() => {
                 if (isMobile) {
                   if (navigator.share) {
@@ -66,7 +84,7 @@ export function ModalShare({ contents, show, onHide }: ModalShareProps): JSX.Ele
             </button>
           </div>
         </div>
-        <Footer contents={contents} />
+        <SocialMediaSharing contents={contents} />
       </div>
     </div>
   );
