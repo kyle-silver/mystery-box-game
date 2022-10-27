@@ -56,8 +56,9 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
         <button onClick={() => setShow(false)}>&times;</button>
         <h1>About</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque dolores vel inventore magnam. Nisi quasi
-          hic rem quos, delectus aspernatur ex veniam quod inventore in optio recusandae culpa dicta itaque.
+          Use the scrambled letters to create new words. Each word must be at least four
+          letters long, and duplicate letters are not allowed. For each puzzle, every
+          letter is used in at least three different words&mdash;can you find them all?
         </p>
         <div className="options">
           <Option title="Peaceful mode" description="Play without a timer">
@@ -74,7 +75,8 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
               type="checkbox"
               checked={options.theme.name === DARK_MODE.name}
               onChange={() => {
-                const theme = options.theme.name === LIGHT_MODE.name ? DARK_MODE : LIGHT_MODE;
+                const theme =
+                  options.theme.name === LIGHT_MODE.name ? DARK_MODE : LIGHT_MODE;
                 setOptions({ ...options, theme });
               }}
             />
@@ -92,13 +94,13 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
           </Option>
         </div>
         <p>
-          This project is free to use and open source. The concept and game design are by [PLACEHOLDER]C.J. The
-          programming and web design are by <a href="https://kyle-silver.github.io">me</a>. The icons are by{" "}
+          Concept and game design are by [PLACEHOLDER]C.J. The programming and web design
+          are by <a href="https://kyle-silver.github.io">me</a>. The icons are by{" "}
           <a href="https://iconoir.com">Iconoir</a>.
         </p>
         <p>
-          The source code for this project can be found on{" "}
-          <a href="https://github.com/kyle-silver/mystery-box-game">GitHub</a>.
+          This project is free to use and source-available; all source code can be found
+          on <a href="https://github.com/kyle-silver/mystery-box-game">GitHub</a>.
         </p>
       </div>
     </div>

@@ -18,6 +18,16 @@
   hyphens: auto;
 }
 
+.about a {
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--link);
+}
+
+.about a:hover {
+  color: var(--link-accent);
+}
+
 .about button {
   margin-top: -0.5rem;
 }

@@ -6,6 +6,8 @@ export interface ColorTheme {
   green: string;
   red: string;
   halfToneGray: string;
+  link: string;
+  linkAccent: string;
 }
 
 export const LIGHT_MODE: ColorTheme = {
@@ -16,6 +18,8 @@ export const LIGHT_MODE: ColorTheme = {
   green: "#75bd8c",
   red: "#da7167",
   halfToneGray: "#f5f5f5",
+  link: "#ff9940",
+  linkAccent: "#a37acc",
 };
 
 export const DARK_MODE: ColorTheme = {
@@ -26,6 +30,8 @@ export const DARK_MODE: ColorTheme = {
   green: "#ABB66F",
   red: "#DA7167",
   halfToneGray: "#3c3836",
+  link: "#fe8019",
+  linkAccent: "#d3869b",
 };
 
 export function setPalette(theme: ColorTheme) {

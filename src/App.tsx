@@ -83,8 +83,16 @@ function App() {
   if (state?.puzzle) {
     return (
       <div className="container">
-        <Sidebar state={state} setState={setState} options={options} setOptions={setOptions} />
-        <WordGuessArea state={state} setState={setState as Dispatch<SetStateAction<GameState>>} />
+        <Sidebar
+          state={state}
+          setState={setState}
+          options={options}
+          setOptions={setOptions}
+        />
+        <WordGuessArea
+          state={state}
+          setState={setState as Dispatch<SetStateAction<GameState>>}
+        />
       </div>
     );
   }
