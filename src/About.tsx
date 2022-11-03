@@ -57,7 +57,7 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
         <h1>About</h1>
         <p>
           Use the scrambled letters to create new words. Each word must be at least four
-          letters long, and duplicate letters are not allowed. For each puzzle, every
+          letters long and not contain any duplicate letters. For each puzzle, every
           letter is used in at least three different words&mdash;can you find them all?
         </p>
         <div className="options">
@@ -81,7 +81,7 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
               }}
             />
           </Option>
-          <Option title="Timer" description="Test your skill">
+          <Option title="Timer" description="Make the game more (or less) stressful">
             <DurationPicker
               duration={options.time}
               onChange={(time) => {
@@ -94,8 +94,9 @@ export function About({ show, setShow, options, setOptions }: AboutProps): JSX.E
           </Option>
         </div>
         <p>
-          Concept and game design are by [PLACEHOLDER]C.J. The programming and web design
-          are by <a href="https://kyle-silver.github.io">me</a>. The icons are by{" "}
+          The concept and game design are by{" "}
+          <a href="https://nearfutures.itch.io">C.J. Linton</a>. The programming and web
+          design are by <a href="https://kyle-silver.github.io">me</a>. The icons are by{" "}
           <a href="https://iconoir.com">Iconoir</a>.
         </p>
         <p>

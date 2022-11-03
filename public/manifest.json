@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Mystery Box",
+  "name": "Mystery Box Game",
   "icons": [
     {
       "src": "favicon.ico",
